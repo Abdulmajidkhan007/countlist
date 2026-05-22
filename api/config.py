@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     allowed_origins: str = "http://localhost:3000,http://localhost:5173"
     openai_api_key: str = ""
 
-    export_dir: str = "/app/exports"
+    export_dir: str = "./exports"
 
     @property
     def cors_origins(self) -> list[str]:
