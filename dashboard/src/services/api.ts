@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosError } from 'axios'
 import type {
   User, Expense, ExpenseListResponse, Category, Group,
   AnalyticsSummary, LimitStatus, TokenPair, ExpenseFilter,
+  ExpenseCreateInput, ExpenseUpdateInput,
 } from '@/types'
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
@@ -41,10 +42,10 @@ export const expensesApi = {
   list: (filters: ExpenseFilter = {}) =>
     http.get<ExpenseListResponse>('/expenses', { params: filters }).then((r) => r.data),
 
-  create: (data: Partial<Expense> & { amount: number; description: string }) =>
+  create: (data: ExpenseCreateInput) =>
     http.post<Expense>('/expenses', data).then((r) => r.data),
 
-  update: (id: number, data: Partial<Expense>) =>
+  update: (id: number, data: ExpenseUpdateInput) =>
     http.patch<Expense>(`/expenses/${id}`, data).then((r) => r.data),
 
   delete: (id: number) => http.delete(`/expenses/${id}`),

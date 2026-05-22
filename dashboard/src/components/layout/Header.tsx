@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { useAppDispatch } from '@/store'
 import { toggleSidebar } from '@/store/slices/uiSlice'
 
 interface HeaderProps {

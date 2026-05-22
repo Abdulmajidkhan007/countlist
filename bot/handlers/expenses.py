@@ -7,7 +7,7 @@ from aiogram.types import Message, CallbackQuery, Voice, PhotoSize
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.database.models import User, Expense, Category, Group, GroupMember, ExpenseStatus
+from bot.database.models import User, Expense, Category, Group, ExpenseStatus
 from bot.keyboards.inline import main_menu_keyboard, confirm_keyboard
 from bot.services.parser import parse_expense
 from bot.services.voice import transcribe_voice

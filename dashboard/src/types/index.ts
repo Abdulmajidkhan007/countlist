@@ -32,6 +32,23 @@ export interface Expense {
   created_at: string
 }
 
+export interface ExpenseCreateInput {
+  amount: number
+  description: string
+  currency?: string
+  category_id?: number
+  group_id?: number
+  expense_date?: string
+  raw_text?: string
+}
+
+export interface ExpenseUpdateInput {
+  amount?: number
+  description?: string
+  category_id?: number
+  expense_date?: string
+}
+
 export interface ExpenseListResponse {
   items: Expense[]
   total: number

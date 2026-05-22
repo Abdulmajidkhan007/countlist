@@ -7,7 +7,7 @@ from aiogram.types import Message, CallbackQuery
 from sqlalchemy import select, func, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.database.models import User, Expense, Category, ExpenseStatus
+from bot.database.models import User, Expense, Category, ExpenseStatus
 from bot.keyboards.inline import main_menu_keyboard
 from bot.utils.formatters import format_amount, format_expense_list, format_stats_message
 
