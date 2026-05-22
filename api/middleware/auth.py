@@ -5,7 +5,8 @@ import hmac
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+import jwt
+from jwt import PyJWTError as JWTError
 from passlib.context import CryptContext
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -32,7 +33,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
         expires_delta or timedelta(minutes=settings.access_token_expire_minutes)
     )
     to_encode["exp"] = expire
-    return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
+    return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)  # type: ignore[return-value]
 
 
 def verify_telegram_auth(data: dict) -> bool:
@@ -57,7 +58,7 @@ async def get_current_user(
     if not token:
         raise credentials_exception
     try:
-        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])  # type: ignore[call-overload]
         user_id: Optional[int] = payload.get("sub")
         if user_id is None:
             raise credentials_exception

@@ -1,7 +1,12 @@
 import asyncio
 import logging
+import ssl
 
+import certifi
+import aiohttp
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.enums import ParseMode
 
 from bot.config import settings
@@ -18,7 +23,18 @@ logger = logging.getLogger(__name__)
 
 
 async def main():
-    bot = Bot(token=settings.bot_token, parse_mode=ParseMode.HTML)
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+
+    session = AiohttpSession()
+    session._connector_init = {"ssl": ssl_context}  # type: ignore[attr-defined]
+
+    bot = Bot(
+        token=settings.bot_token,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+        session=session,
+    )
     dp = Dispatcher()
 
     dp.update.middleware(DbMiddleware())
